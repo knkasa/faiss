@@ -46,6 +46,8 @@ model = SentenceTransformer(model_name)
 def embed_passages(texts):
     prefixed = ['passage: ' + t for t in texts]
     return model.encode(prefixed, normalized_embeddings=True) #Normalize the vec.
+    # You may parallelize.
+    #return model.encode_multi_process(prefixed, pool=model.start_multi_process_pool(), batch_size=256)  
 
 # Embed
 chunk_texts = [rec['chunk_text'] for rec in records]
@@ -82,3 +84,4 @@ def search(query: str, top_k=5):
 #query it.
 query = "てすと、てすと"
 res = search(query, top_k=5)
+
